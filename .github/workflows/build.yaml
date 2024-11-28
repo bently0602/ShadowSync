@@ -20,20 +20,17 @@ jobs:
         with:
           go-version: "1.23" # Specify the Go version
 
-      # - name: Install GitHub CLI
-      #   run: sudo apt-get install gh -y
-
       - name: Build Binaries
         run: |
           mkdir -p dist
           # Build for Windows (AMD64)
-          GOOS=windows GOARCH=amd64 go build -o dist/webdav-server-windows.exe .
+          GOOS=windows GOARCH=amd64 go build -o dist/shadowsync.exe .
           # Build for macOS (AMD64)
-          GOOS=darwin GOARCH=amd64 go build -o dist/webdav-server-macos-amd64 .
+          GOOS=darwin GOARCH=amd64 go build -o dist/shadowsync-macos-amd64 .
           # Build for macOS (ARM64)
-          GOOS=darwin GOARCH=arm64 go build -o dist/webdav-server-macos-arm64 .
+          GOOS=darwin GOARCH=arm64 go build -o dist/shadowsync-macos-arm64 .
           # Build for Linux (AMD64)
-          GOOS=linux GOARCH=amd64 go build -o dist/webdav-server-linux .
+          GOOS=linux GOARCH=amd64 go build -o dist/shadowsync .
 
       - name: Authenticate GitHub CLI
         run: echo "${{ secrets.PAT }}" | gh auth login --with-token
