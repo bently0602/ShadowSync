@@ -38,6 +38,11 @@ jobs:
       - name: Authenticate GitHub CLI
         run: echo "${{ secrets.PAT }}" | gh auth login --with-token
 
+      - name: Delete Github Release If Exists
+        run: |
+          output=$(gh release delete "${{ github.ref_name }}" --cleanup-tag --yes 2>&1) || [[ "${output}" == "release not found" ]]
+          echo $output
+
       - name: Create GitHub Release and Upload Binaries
         run: |
           # Create the release
