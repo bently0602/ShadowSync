@@ -31,24 +31,9 @@ jobs:
           GOOS=darwin GOARCH=arm64 go build -o dist/webdav-server-macos-arm64 .
           # Build for Linux (AMD64)
           GOOS=linux GOARCH=amd64 go build -o dist/webdav-server-linux .
-
+          
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.4.3
         with:
           name: binaries
           path: dist/*
-
-      - name: Create GitHub Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "dist/*"
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-          name: "Release ${{ github.ref_name }}"
-          body: |
-            New release for ${{ github.ref_name }}.
-            Includes:
-            - Linux binary: `webdav-server-linux`
-            - Windows binary: `webdav-server-windows.exe`
-            - macOS (Intel): `webdav-server-macos-amd64`
-            - macOS (Apple Silicon): `webdav-server-macos-arm64`
